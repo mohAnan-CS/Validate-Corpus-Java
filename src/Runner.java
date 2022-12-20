@@ -1,15 +1,18 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Runner {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        ArrayList<String> arrayListCorpus = readFile("C:\\Users\\twitter\\ValidateCorpus\\src\\test");
+        ArrayList<String> arrayListCorpus = readFile("C:\\Users\\twitter\\IdeaProjects\\ValidateCorpus\\src\\retweets");
         ArrayList<String> arrayListFinalCorpus = removeSpaces(arrayListCorpus);
         printArrayList(arrayListFinalCorpus);
+        storeCorpusFile(arrayListFinalCorpus);
 
     }
 
@@ -148,7 +151,14 @@ public class Runner {
     }
 
     //Store final arabic corpus to csv file
-    public static void storeCorpusFile(ArrayList<String> arrayList){
+    public static void storeCorpusFile(ArrayList<String> arrayList) throws IOException {
+
+        Path output = Paths.get("src/corpus.csv");
+        try {
+            Files.write(output, arrayList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
